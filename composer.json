@@ -1,0 +1,13 @@
+{
+    "name": "safiy/systmedegestiondecabinetmdical",
+    "require": {},
+
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "core/"
+        }
+    }
+    
+    
+}
