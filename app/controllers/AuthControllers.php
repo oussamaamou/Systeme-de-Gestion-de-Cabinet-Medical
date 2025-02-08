@@ -1,61 +1,64 @@
 <?php
-
 namespace App\Controllers;
 
+use Core\Controller;
 use App\Models\Utilisateur;
 
-class AuthController {
-    public function index() {
-        include __DIR__ . '/../views/auth/index.php';
+class AuthControllers extends Controller
+{
+    public function loginForm()
+    {
+        $this->view('auth/login');
     }
 
-    public function login() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+    public function inscriptionForm()
+    {
+        $this->view('auth/inscription');
+    }
 
-            $utilisateur = new Utilisateur();
-            $user = $utilisateur->connecter($email, $password);
+    public function inscription()
+    {
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+        $telephone = $_POST['telephone'];
+        $email = $_POST['email'];
+        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+        $role = $_POST['role'];
 
-            if ($user) {
+        Utilisateur::create($nom, $prenom, $telephone, $email, $password, $role);
+        header('Location: log');
+    }
 
-                session_start();
-                $_SESSION['user'] = [
-                    'nom' => $user->getNom(),
-                    'prenom' => $user->getPrenom(),
-                    'email' => $user->getEmail(),
-                    'role' => $user->getRole()
-                ];
-                header('Location: index.php');
+    public function login()
+    {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $user = Utilisateur::findByEmail($email);
+
+        if ($user && password_verify($password, $user['mot_de_passe'])) {
+            session_start();
+            $_SESSION['user'] = $user;
+
+            $role = $user['role'];
+            
+            if($role === 'Patient'){
+                header("Location: patients");
                 exit();
-            } else {
-                echo "Email ou mot de passe incorrect.";
+            }
+            if($role === 'Medecin'){
+                header("Location: medecins");
+                exit();
             }
         } else {
-            include __DIR__ . '/../views/auth/login.php';
+            $this->view('auth/login', ['error' => 'Invalid credentials.']);
         }
     }
 
-    public function register() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $utilisateur = new Utilisateur();
-            $utilisateur->setNom($_POST['nom']);
-            $utilisateur->setPrenom($_POST['prenom']);
-            $utilisateur->setEmail($_POST['email']);
-            $utilisateur->setMotDePasse($_POST['password']);
-            $utilisateur->setTelephone($_POST['telephone']);
-            $utilisateur->setRole($_POST['role']);
-            $utilisateur->setPhoto('');
-            $utilisateur->setEtat('Normal');
-
-            if ($utilisateur->inscrire()) {
-                header('Location: login.php');
-                exit();
-            } else {
-                echo "Erreur lors de l'inscription.";
-            }
-        } else {
-            include __DIR__ . '/../views/auth/inscription.php';
-        }
+    public function logout()
+    {
+        session_start();
+        session_destroy();
+        header('Location: log');
     }
 }
+?>
