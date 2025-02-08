@@ -1,27 +1,43 @@
 <?php
-
 namespace Core;
 
-class Router {
-    private static $routes = [];
+class Router
+{
+    private $routes = [];
 
-    public static function add($uri, $controller, $method) {
-        self::$routes[$uri] = ['controller' => $controller, 'method' => $method];
+    public function get($uri, $controller)
+    {
+        $this->routes['GET'][$uri] = $controller;
     }
 
-    public static function dispatch($uri) {
-        if (array_key_exists($uri, self::$routes)) {
-            $controller = "app\\controllers\\" . self::$routes[$uri]['controller'];
-            $method = self::$routes[$uri]['method'];
+    public function post($uri, $controller)
+    {
+        $this->routes['POST'][$uri] = $controller;
+    }
 
-            if (class_exists($controller) && method_exists($controller, $method)) {
-                $controllerInstance = new $controller();
-                call_user_func([$controllerInstance, $method]);
-            } else {
-                echo "Erreur 404 : Page non trouvée.";
-            }
+    public function dispatch()
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        $uri = strtok($_SERVER['REQUEST_URI'], '?');
+        // echo $uri;
+        $path = explode('/',$uri,5);
+        // var_dump($path[4]);
+        $newPath = '/'.$path[4];
+        // echo $newPath;
+        if (isset($this->routes[$method][$newPath])) {
+            $controllerAction = explode('@', $this->routes[$method][$newPath]);
+            // echo '<pre>';
+            // var_dump($this->routes[$method][$newPath]);
+            // echo '</pre>';
+            $controllerName = 'App\\Controllers\\' . $controllerAction[0];
+            $action = $controllerAction[1];
+
+            $controller = new $controllerName;
+            $controller->$action();
         } else {
-            echo "Erreur 404 : Page non trouvée.";
+            http_response_code(404);
+            echo "404 Not Found";
         }
     }
 }
+?>
