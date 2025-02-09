@@ -48,29 +48,15 @@
     <main>
         
         <!-- Reservation Form-->
-        <div id="ctnrcsltion" class="hidden fixed left-[32rem] top-[-1rem] flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div id="ctnrcsltion" class="hidden fixed left-[32rem] top-[-1rem] flex flex-col items-center justify-center px-8 py-8 mx-auto md:h-screen lg:py-0">
             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                <i id="xmarkcsltion" class="fa-solid fa-xmark ml-[26rem] text-2xl cursor-pointer mt-[1.2rem]" style="color: #2e2e2e;"></i>
+                <i id="xmarkcsltion" class="fa-solid fa-xmark ml-[26rem] mr-[2rem] text-2xl cursor-pointer mt-[1.2rem]" style="color: #2e2e2e;"></i>
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-stone-700 md:text-2xl dark:text-white">
                         Reserver une Consultation
                     </h1>
-                    <form class="space-y-4 md:space-y-6" method="POST">
-                        <input type="hidden" name="avocat_ID" id="avocat_ID" value="">
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <div>
-                                <label for="nom" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Nom</label>
-                                <input type="text" name="nom" id="nom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" disabled>
-                            </div>
-                            <div>
-                                <label for="prenom" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Prenom</label>
-                                <input type="text" name="prenom" id="prenom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" disabled>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="telephone" class="block mb-2 text-sm font-medium text-stone-700 dark:text-white">Téléphone</label>
-                            <input type="text" name="telephone" id="telephone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" disabled>
-                        </div>
+                    <form class="space-y-4 md:space-y-6" action="reservations" method="POST">
+                        <input type="hidden" name="medecin_id" id="medecin_id" value="">
                         <div class="mb-5">
                             <label for="date_reservation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date de Consultation</label>
                             <input type="datetime-local" id="date_reservation" name="date_reservation" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
@@ -93,7 +79,7 @@
                         <img src="https://img.freepik.com/vecteurs-premium/profil-du-medecin-icone-du-service-medical_617655-48.jpg" alt="Profile Picture" class="rounded-full w-48 h-48 mx-auto mb-4 border-4 border-teal-500 transition-transform duration-300 hover:scale-105">
                         <h1 class="text-2xl font-bold text-teal-500 dark:text-white mb-2"><?php echo htmlspecialchars($medecin['nom'] ?? 'Inconnu') . ' ' . htmlspecialchars($medecin['prenom'] ?? 'Inconnu') ?></h1>
                         <p class="text-stone-700 font-semibold">Medecin</p>
-                        <button onclick="addConsultationForm()" class="mt-4 font-medium text-white px-4 py-2 rounded-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br transition-colors duration-300">Reserver</button>
+                        <button onclick="addConsultationForm(<?php echo $medecin['id'] ?>)" class="mt-4 font-medium text-white px-4 py-2 rounded-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br transition-colors duration-300">Reserver</button>
                     </div>
                     <div class="md:w-2/3 md:pl-8">
                         
@@ -147,13 +133,8 @@
 
     <script>
 
-        const clientData = <?php echo json_encode($client); ?>;
-
-        function addConsultationForm(avocat_ID) {
-            document.getElementById("avocat_ID").value = avocat_ID;
-            document.getElementById("nom").value = clientData.Nom;
-            document.getElementById("prenom").value = clientData.Prenom;
-            document.getElementById("telephone").value = clientData.Telephone;
+        function addConsultationForm(medecin_ID) {
+            document.getElementById("medecin_id").value = medecin_ID;
 
             document.getElementById("ctnrcsltion").classList.remove('hidden');
         };
