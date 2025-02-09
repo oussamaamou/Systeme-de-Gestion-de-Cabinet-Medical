@@ -36,8 +36,10 @@ class AuthControllers extends Controller
         $user = Utilisateur::findByEmail($email);
 
         if ($user && password_verify($password, $user['mot_de_passe'])) {
+            
             session_start();
-            $_SESSION['user'] = $user;
+
+            $_SESSION['id'] = $user['id'];
 
             $role = $user['role'];
             
