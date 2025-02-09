@@ -16,6 +16,7 @@ class Routes
         $router->get('/reservations', 'PatientControllers@reservations');
         $router->get('/consultations', 'PatientControllers@consultations');
         $router->get('/reservations', 'PatientControllers@listeconsultations');
+        $router->post('/reservations', 'PatientControllers@reservezConsultation');
         $router->get('/medecins', 'MedecinControllers@index');
         $router->get('/rendezvous', 'RendezVousControllers@index');
         $router->post('/rendezvous/create', 'RendezVousControllers@create');
