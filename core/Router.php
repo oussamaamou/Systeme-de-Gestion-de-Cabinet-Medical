@@ -19,16 +19,10 @@ class Router
     {
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = strtok($_SERVER['REQUEST_URI'], '?');
-        // echo $uri;
         $path = explode('/',$uri,5);
-        // var_dump($path[4]);
         $newPath = '/'.$path[4];
-        // echo $newPath;
         if (isset($this->routes[$method][$newPath])) {
             $controllerAction = explode('@', $this->routes[$method][$newPath]);
-            // echo '<pre>';
-            // var_dump($this->routes[$method][$newPath]);
-            // echo '</pre>';
             $controllerName = 'App\\Controllers\\' . $controllerAction[0];
             $action = $controllerAction[1];
 
