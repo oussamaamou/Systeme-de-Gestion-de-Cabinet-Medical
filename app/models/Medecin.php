@@ -9,7 +9,7 @@ class Medecin
     public static function all()
     {
         $db = Database::getConnection();
-        $stmt = $db->prepare("SELECT Nom, Prenom, Email, Telephone FROM utilisateurs WHERE Role = 'Medecin'");
+        $stmt = $db->prepare("SELECT ID, Nom, Prenom, Email, Telephone FROM utilisateurs WHERE Role = 'Medecin'");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
