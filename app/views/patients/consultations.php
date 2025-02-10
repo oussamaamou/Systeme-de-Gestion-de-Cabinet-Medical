@@ -69,31 +69,33 @@
                             
                         </tr>
                     </thead>
-                    
+
+                    <?php foreach( $reservations as $reservation ){ ?>
                     <tbody id="rsrvtioncard">
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             
                             <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                 <img class="w-10 h-10 rounded-full" src="https://img.freepik.com/vecteurs-premium/profil-du-medecin-icone-du-service-medical_617655-48.jpg" alt="Avocat Profile Picture">
                                 <div class="ps-3">
-                                    <div class="text-base font-semibold">Ibrahime Khalaf</div>
-                                    <div class="font-normal text-gray-500">khalaf@gmail.com</div>
+                                    <div class="text-base font-semibold"><?php echo htmlspecialchars($reservation['nom'] ?? 'Inconnu') . ' ' . htmlspecialchars($reservation['prenom'] ?? 'Inconnu') ?></div>
+                                    <div class="font-normal text-gray-500"><?php echo htmlspecialchars($reservation['email'] ?? 'Inconnu') ?></div>
                                 </div>  
                             </th>
                             <td class="px-6 py-4">
-                                27-03-2025
+                            <?php echo htmlspecialchars($reservation['date_reservation'] ?? 'Inconnu') ?>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> En Attente
+                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div><?php echo htmlspecialchars($reservation['statut'] ?? 'Inconnu') ?>
                                 </div>
                             </td>
                             <td class="annltbl px-6 py-4">
-                                <button onclick="getIdReservation()" class="font-medium text-red-600 hover:cursor-pointer">Annuler</button>
+                                <button onclick="getIdReservation(<?php echo $reservation['date_reservation'] ?>)" class="font-medium text-red-600 hover:cursor-pointer">Annuler</button>
                             </td>
                             
                         </tr>
                     </tbody>
+                    <?php } ?>
                 </table>
 
             </div>
