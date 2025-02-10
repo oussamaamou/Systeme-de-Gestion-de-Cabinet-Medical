@@ -15,9 +15,14 @@ class Routes
         $router->get('/patients', 'PatientControllers@index');
         $router->get('/reservations', 'PatientControllers@reservations');
         $router->get('/consultations', 'PatientControllers@consultations');
+        $router->get('/consultations', 'PatientControllers@afficherMesReservations');
         $router->get('/reservations', 'PatientControllers@listeconsultations');
         $router->post('/reservations', 'PatientControllers@reservezConsultation');
         $router->get('/medecins', 'MedecinControllers@index');
+        $router->get('/mesconsultations', 'MedecinControllers@mesconsultations');
+        $router->get('/mesconsultations', 'MedecinControllers@afficherMesConsultations');
+        $router->post('/rendezvous/confirmer', 'MedecinControllers@confirmerRendezVous');
+        $router->post('/rendezvous/annuler', 'MedecinControllers@annulerRendezVous');
         $router->get('/rendezvous', 'RendezVousControllers@index');
         $router->post('/rendezvous/create', 'RendezVousControllers@create');
     }
