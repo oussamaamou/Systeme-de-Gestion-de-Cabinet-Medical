@@ -21,10 +21,9 @@ class Routes
         $router->get('/medecins', 'MedecinControllers@index');
         $router->get('/mesconsultations', 'MedecinControllers@mesconsultations');
         $router->get('/mesconsultations', 'MedecinControllers@afficherMesConsultations');
-        $router->post('/rendezvous/confirmer', 'MedecinControllers@confirmerRendezVous');
-        $router->post('/rendezvous/annuler', 'MedecinControllers@annulerRendezVous');
-        $router->get('/rendezvous', 'RendezVousControllers@index');
-        $router->post('/rendezvous/create', 'RendezVousControllers@create');
+        $router->post('/confirmer', 'MedecinControllers@confirmerRendezVous');
+        $router->post('/annuler', 'MedecinControllers@annulerRendezVous');
+        $router->get('/diagnostic', 'MedecinControllers@diagnostic');
     }
 }
 ?>

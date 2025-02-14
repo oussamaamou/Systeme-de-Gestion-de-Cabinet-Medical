@@ -19,6 +19,12 @@ class MedecinControllers extends Controller
         $this->view('medecins/consultation');
     }
 
+    public function diagnostic(){
+        
+        $this->view('medecins/diagnostic');
+
+    }
+
     public function afficherMesConsultations(){
         session_start();
 
@@ -55,6 +61,7 @@ class MedecinControllers extends Controller
             exit();
         }
     }
+
 
 }
 

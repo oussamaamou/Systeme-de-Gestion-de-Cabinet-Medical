@@ -36,9 +36,6 @@
                         <li>
                             <a href="mesconsultations" class="block py-2 pr-4 pl-3 text-stone-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Reservations</a>
                         </li>
-                        <li>
-                            <a href="" class="block py-2 pr-4 pl-3 text-stone-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Diagnostics</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -48,11 +45,11 @@
     <main class="pt-[3rem]">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
-                <form id="cancelReservationForm" method="POST" action="rendezvous/annuler">
+                <form id="cancelReservationForm" method="POST" action="annuler">
                     <input type="hidden" name="reservation_ID" id="reservation_ID_annuler" value="">
                 </form>
 
-                <form id="acceptReservationForm" method="POST" action="rendezvous/confirmer">
+                <form id="acceptReservationForm" method="POST" action="confirmer">
                     <input type="hidden" name="reservation_ID" id="reservation_ID_confirmer" value="">
                 </form>
 
